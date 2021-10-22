@@ -1,7 +1,7 @@
 # Solidus Serverless API
 
 A containerized Solidus API that can be deployed to AWS using AWS's Cloud Development Kit (CDK).
-Utilizing Fargate and Serverless Aurora (MYSql) for a semi-serverless environment.
+Utilizing Fargate and Serverless Aurora (MySQL) for a very-near-serverless environment.
 
 ## Getting Started
 
@@ -20,7 +20,7 @@ $ docker build . --tag solidus-eks
 
 ## Usage
 
-A few examples of useful commands and/or tasks.
+To run the application:
 
 ```
 $ docker-compose up
