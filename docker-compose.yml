@@ -1,0 +1,40 @@
+version: "3.9"
+services:
+  db:
+    image: "yobasystems/alpine-mariadb:latest"
+    container_name: 'solidus_db'
+    restart: always
+    environment:
+     MYSQL_ROOT_PASSWORD: penguin
+    ports:
+      - "33061:3306"
+  redis:
+    image: redis:4.0-alpine
+    container_name: 'solidus_cache'
+    command: redis-server
+    ports:
+      - "16379:6379"
+  web:
+    image: 'rails6:latest'
+    container_name: 'solidus_api'
+    command: bundle exec rails s -p 3000 -e development -b '0.0.0.0'
+    stdin_open: true
+    tty: true
+    volumes:
+      - .:/usr/src/app
+    environment:
+     DB_USERNAME: root
+     DB_PASSWORD: penguin
+     DB_NAME: eks_api_dev
+     DB_PORT: 3306
+     DB_HOST: db
+     RAILS_ENV: development
+     RAILS_MAX_THREADS: 5
+     REDIS_HOST: redis
+     REDIS_PORT: 6379
+     BUNDLE_PATH: /usr/src/app/.bundle
+    ports:
+      - "3000:3000"
+    depends_on:
+      - "db"
+      - "redis"
